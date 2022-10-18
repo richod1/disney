@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import './App.css';
 import Home from './components/Home';
+import Login from './components/Login';
 import Detail from './components/Detail';
 import {
   BrowserRouter as Router,
@@ -18,6 +19,9 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route path="/login">
+            <Login/>
+          </Route>
           <Route path="/detail">
             <Detail/>
           </Route>
