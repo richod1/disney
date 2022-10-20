@@ -1,14 +1,33 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
+import {useParams} from "react-router-dom"
+import {useState} from "react"
+import db from "../firebase"
+
 
 function Detail() {
+    const {id} = useParams();
+    const [movie,setMovie]= useState();
+      useEffect(()=>{
+       db.collection("movies")
+       .doc(id)
+       .get()
+       .then((doc)=>{
+        if(doc.exist){
+            setMovie(doc.data());
+        }else{
+
+        }
+       })
+      }, [])
+
   return (
     <Container>
 <Background>
-  <img src="https://media.gq.com/photos/5dcd9afe58ea9a00096026f3/master/pass/MCDSIMO_FE021.jpg"/>
+  <img src={movie.backgroundImg}/>
 </Background>
 <ImageTitle>
-  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRknLPR6S6ZL_sf7z5BOg63JbvqDx7wDiBrnw&usqp=CAU"/>
+  <img src={movie.titleImg}/>
 </ImageTitle>
 <Controls>
   <PlayButton>
@@ -28,12 +47,10 @@ function Detail() {
 
 </Controls>
 <SubTitle>
-2022 . 7m. Family, Fantasy, kids, Animation.
+{movie.subTitle}
 </SubTitle>
 <Description>
-The series is a satirical depiction of American life, epitomized by the Simpson family, which consists of Homer, Marge, Bart, Lisa, and Maggie. 
-The show is set in the fictional town of Springfield and parodies American culture and society, television, and the human condition.
-
+{movie.description}
 </Description>
     </Container>
   )
